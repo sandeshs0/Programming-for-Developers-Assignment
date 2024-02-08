@@ -1,5 +1,16 @@
 package Question3;
 
+
+// You are developing a student score tracking system that keeps track of scores from different assignments. The
+// ScoreTracker class will be used to calculate the median score from the stream of assignment scores. The class
+// should have the following methods:
+//  ScoreTracker() initializes a new ScoreTracker object.
+//  void addScore(double score) adds a new assignment score to the data stream.
+//  double getMedianScore() returns the median of all the assignment scores in the data stream. If the number
+// of scores is even, the median should be the average of the two middle scores.
+
+
+
 import java.util.Collections;
 import java.util.PriorityQueue;
 
