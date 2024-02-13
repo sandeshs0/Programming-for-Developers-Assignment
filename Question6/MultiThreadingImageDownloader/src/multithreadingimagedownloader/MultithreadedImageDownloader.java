@@ -6,6 +6,7 @@ package multithreadingimagedownloader;
 
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +49,7 @@ public class MultithreadedImageDownloader extends javax.swing.JFrame {
         downloadInfoMap = new ConcurrentHashMap<>();
         progressBarMap = new HashMap<>();
     }
+private static SecureRandom random = new SecureRandom();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -249,7 +252,7 @@ private int count=1; //to set the numbered bullets 1,2,3
                                     loadingBar.setValue(currentProgress);
                                 }
                             });
-
+                            
                             if (Thread.currentThread().isInterrupted()) {
                                 throw new InterruptedException("Download interrupted");
                             }
@@ -257,13 +260,29 @@ private int count=1; //to set the numbered bullets 1,2,3
                             Thread.sleep(50);
                         }
 
-                        String fileName = "image_" + System.currentTimeMillis() + ".jpg";
+
+                            String fileName = "pic_" + random.nextInt(Integer.MAX_VALUE) + ".png";
+
+                  
                         saveImage(outputStream.toByteArray(), fileName); 
                         downloadedImages(fileName,position,count); //Calling the method to add label
                         position += 20; //Updating the position counter
                         count+=1; //Updating the downloaded images count 
+                      
+            
                         JOptionPane.showMessageDialog(MultithreadedImageDownloader.this,
                                 "Image downloaded successfully! \n"+fileName);
+                        
+                        // Opening the downloaded Image
+
+                        File file = new File("C:\\Users\\hello\\OneDrive\\Documents\\NetBeansProjects\\MultiThreadingImageDownloader\\saved_images\\"+fileName);
+                        System.out.println("File exists: " + file.exists());
+                        System.out.println("Desktop is supported: " + Desktop.isDesktopSupported());
+
+                           if (file.exists() && Desktop.isDesktopSupported()) {
+                          Desktop.getDesktop().open(file);
+                            }
+//                       
                         inputStream.close();
                         outputStream.close();
                     } else {
