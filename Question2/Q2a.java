@@ -30,41 +30,35 @@ package Question2;
 
 public class Q2a {
     public static int minimumMoves(int[] sewingMachines) {
-        int totalNoOfDress = 0; //initializing the totalDress as 0
-        int noOfSewingMachine = sewingMachines.length; 
+        int totalNoOfDress = 0;
+        int numMachines = sewingMachines.length;
 
-        // calculating the total number of dresses
-        for (int i = 0; i < sewingMachines.length; i++) {
+         // calculating the total number of dresses
+         for (int i = 0; i < sewingMachines.length; i++) {
             totalNoOfDress += sewingMachines[i]; // Adding element from sewingMachines to totalNoOfDress
         }
 
         //checking if dresses can be equally assigned to machines
-        if (totalNoOfDress % noOfSewingMachine != 0) {
-            return -1;
+        if (totalNoOfDress % numMachines != 0) {
+            return -1; // Cannot equalize if the total dresses cannot be evenly distributed
         }
 
-        //checking no of dresses that fit in a machine
-        int dressesPerMachine = totalNoOfDress / noOfSewingMachine;
-
-        
-        int moves = 0; // to store no of moves required
+        int averageDressesPerMachine = totalNoOfDress / numMachines;
+        int moves = 0;
+        int cumulativeSum = 0;
+      
         //iterating in machine except the last
-        for (int i = 0; i < noOfSewingMachine - 1; i++) { 
-            int diff = dressesPerMachine - sewingMachines[i];
 
-           //if the difference is more than 0, moving the extra dresses to this machine
-            if (diff > 0) {
-                int shift = Math.min(diff, sewingMachines[i + 1]);
-                sewingMachines[i] += shift;
-                sewingMachines[i + 1] -= shift;
-                moves += shift;
-            }
+        for (int i = 0; i < numMachines - 1; i++) {
+            cumulativeSum += sewingMachines[i] - averageDressesPerMachine;
+            moves = Math.max(moves, Math.abs(cumulativeSum));
         }
 
         return moves;
     }
+
     public static void main(String[] args) {
-        int[] dressInLine = {1,0,5};
-        System.out.println(minimumMoves(dressInLine));
+        int[] sewingMachines = { 1,0,5};
+        System.out.println(minimumMoves(sewingMachines));
     }
 }
