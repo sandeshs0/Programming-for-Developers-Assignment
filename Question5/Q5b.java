@@ -18,7 +18,8 @@ public class Q5b {
         Map<Integer, Integer> noOfIncomingEdge = new HashMap<>(); 
 
         // calculating incoming edge count
-        for (int[] edge : edges) {
+        for (int i = 0; i < edges.length; i++) {
+            int[] edge = edges[i];
             int sourceNode = edge[0];
             int destNode = edge[1];
             graph.putIfAbsent(sourceNode, new ArrayList<>());
@@ -26,25 +27,27 @@ public class Q5b {
             noOfIncomingEdge.put(destNode, noOfIncomingEdge.getOrDefault(destNode, 0) + 1);
         }
 
-        // DFS starting from the target node to find impacted nodes
+        // DFS starting from the target node
         List<Integer> result = new ArrayList<>();
         dfs(graph, noOfIncomingEdge, targetNode, targetNode, result);
 
         return result;
     }
 
-    // Depth-first search (DFS) to find impacted nodes
+    //DFS to find impacted nodes
     private static void dfs(Map<Integer, List<Integer>> graph, Map<Integer, Integer> noOfIncomingEdge, int currentNode, int targetNode,
                             List<Integer> result) {
-        // Checking if current node has only one incoming edge (excluding target)
+        // Checking if current node has only one incoming edge
         if (noOfIncomingEdge.getOrDefault(currentNode, 0) == 1 && graph.get(targetNode).contains(currentNode)) {
             result.add(currentNode); // Adding the current node to the result list
             addChildren(graph, currentNode, result); // adding children of the current node to the result list in recursion
         }
 
-        // through children of the current node
+        // iterating through children of the current node
+        List<Integer> children = graph.get(currentNode);
         if (graph.containsKey(currentNode)) {
-            for (int child : graph.get(currentNode)) {
+            for (int i = 0; i < children.size(); i++) {
+                int child = children.get(i);
                 dfs(graph, noOfIncomingEdge, child, targetNode, result); // Recursive call for each child
             }
         }
@@ -53,7 +56,9 @@ public class Q5b {
     //method to add children of a node to the result list recursively
     private static void addChildren(Map<Integer, List<Integer>> graph, int node, List<Integer> result) {
         if (graph.containsKey(node)) {
-            for (int descendant : graph.get(node)) {
+            List<Integer> descendants = graph.get(node);
+            for (int i = 0; i < descendants.size(); i++) {
+             int descendant = descendants.get(i);
                 result.add(descendant); // Adding the child node to the result list
                 addChildren(graph, descendant, result); // Recursively adding children of the child node
             }

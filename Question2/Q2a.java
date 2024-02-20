@@ -53,7 +53,6 @@ public class Q2a {
             cumulativeSum += sewingMachines[i] - averageDressesPerMachine;
             moves = Math.max(moves, Math.abs(cumulativeSum));
         }
-
         return moves;
     }
 

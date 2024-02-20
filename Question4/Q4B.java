@@ -54,27 +54,21 @@ public class Q4B {
         if (root == null) {
             return;
         }
-
         Stack<BinaryTree> nodeStack = new Stack<>();
         BinaryTree current = root;
-
         while (current != null || !nodeStack.isEmpty()) {
             while (current != null) {
                 nodeStack.push(current);
                 current = (reverse) ? current.right : current.left;
             }
-
             current = nodeStack.pop();
-
             if (!reverse && current.val > target) {
                 break;
             }
             if (reverse && current.val <= target) {
                 break;
             }
-
             stack.push(current.val);
-
             current = (reverse) ? current.left : current.right;
         }
     }
