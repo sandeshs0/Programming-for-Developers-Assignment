@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 class PriorityQueue{
     ArrayList<Integer> minHeap; //  Min heap to store the elements of priority queue
-
-
+    
     PriorityQueue(){
         minHeap=new ArrayList<>();
     }
@@ -99,6 +98,4 @@ public class Q3B {
             System.out.println(priorityQueue.remove());
         }
     }
-
-    
 }
