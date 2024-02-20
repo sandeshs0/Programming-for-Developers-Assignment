@@ -62,6 +62,5 @@ public class Q1a {
     public static void main(String[] args) {
         int[][] costs = {{2, 3, 1}, {4, 6, 8}, {3, 2, 5}};
         System.out.println(minimumCostFinder(costs)); 
-        // Output= 7
     }
 }
